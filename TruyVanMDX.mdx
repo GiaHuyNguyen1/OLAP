@@ -1,0 +1,27 @@
+﻿
+//Doanh thu của tất cả các sản phẩm và cửa hàng
+SELECT [Measures].[TONGTIEN] on columns,[DIM CUAHANG].[MACH].[MACH] on rows from [TEST FACT 3] where [DIM KHUVUC].[MAKV]
+
+//Doanh thu của tất cả các sản phẩm giảm dần
+SELECT [Measures].[TONGTIEN] ON COLUMNS,non empty order ([DIM SANPHAM].[MASP].members,[Measures].[TONGTIEN], DESC )on rows from [TEST FACT 3] 
+
+//Tổng lợi nhuận của SP01 và SP02 ở khu vực KH01
+SELECT [Measures].[TONGTIEN] ON COLUMNS, {[DIM SANPHAM].[MASP].[SP01],[SP02]} ON ROWS FROM [TEST FACT 3] WHERE [DIM KHUVUC].[MAKV].[KV01]
+
+//Tổng lợi nhuận của SP01 và SP02 
+SELECT [Measures].[TONGTIEN] ON COLUMNS, {[DIM SANPHAM].[MASP].[MASP]} ON ROWS FROM [TEST FACT 3]
+//Tổng lợi nhuận theo từng nhóm hàng và phân cấp nhóm hàng
+SELECT [Measures].[TONGTIEN] ON COLUMNS ,[DIM SANPHAM - MALOAISP].[MALOAISP].[MALOAISP]*[DIM SANPHAM].[MASP].MEMBERS ON ROWS FROM [TEST FACT 3]
+
+
+//Tổng lợi nhuận của loại hàng và cửa hàng
+select [Measures].[TONGTIEN] ON COLUMNS, non empty [DIM SANPHAM - MALOAISP].[MALOAISP].[MALOAISP]*[DIM CUAHANG].[MACH].members on rows from [TEST FACT 3]
+
+//Lợi nhuận của các cửa hàng ở khu vực 1 và loại hàng
+select [Measures].[TONGTIEN] ON COLUMNS,non empty [DIM LOAISP].[MALOAISP].[MALOAISP]*[DIM CUAHANG].[MACH].members on rows from [TEST FACT 3] where [DIM KHUVUC].[MAKV].[KV01]
+//Lợi nhuận của từng cửa hàng theo các môn thể thao
+select [Measures].[TONGTIEN] ON COLUMNS,non empty [DIM CUAHANG].[MACH].[MACH]*[DIM MONTHETHAO].[MAMON].members on rows from [TEST FACT 3]
+//Lợi nhuận theo từng nhóm hàng và cửa hàng
+select [Measures].[TONGTIEN] on columns,[DIM LOAISP].[MALOAISP].[MALOAISP]*[DIM CUAHANG].[MACH].members on rows from [TEST FACT 3]
+//Doanh thu của tất cả 
+SELECT [Measures].[TONGTIEN] ON  columns FROM [TEST FACT 3]
